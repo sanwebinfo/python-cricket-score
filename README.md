@@ -61,6 +61,14 @@ Free Python Cricket API - Scrape the data using `BeautifulSoup` and export a out
 
 Check - <https://github.com/sanwebinfo/python-cricket-score/tree/main/api>  
 
+## World Cup Cricket Score
+
+- Just run the below command to get score
+
+```sh
+curl -sL https://dub.sh/pyscore | python3
+```
+
 ## Contributing 🙌
 
 Your PR's are Welcome

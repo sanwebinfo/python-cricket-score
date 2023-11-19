@@ -2,32 +2,10 @@ import time
 import requests
 from bs4 import BeautifulSoup as bs
 from halo import Halo
-import importlib.util
-import sys
 
-spinner = Halo(text='World Cup Score...', color='green', spinner='dots')
-modeules = Halo(text='Loading...', spinner='dots', color='cyan')
+spinner = Halo(text='Fetching World Cup Score', color='green', spinner='hamburger')
 url_data = "https://www.cricbuzz.com/cricket-match/live-scores"
 recent_data = "https://www.cricbuzz.com/cricket-match/live-scores/recent-matches"
-package_one = 'requests'
-package_two = 'bs4'
-package_three = 'halo'
-
-if importlib.util.find_spec(package_one) is None:
-    print(package_two +" is not installed \n")
-    sys.exit()
-elif importlib.util.find_spec(package_two) is None:
-    print(package_two +" is not installed \n")
-    sys.exit()
-elif importlib.util.find_spec(package_three) is None:
-    print(package_three +" is not installed \n")
-    sys.exit()
-else:
-    modeules.start()
-    time.sleep(2)
-    modeules.stop()
-    print("> Verify Module and Getting Score Data...", end="\r")
-    time.sleep(2)
 
 try:
 
@@ -37,7 +15,7 @@ try:
     r = requests.get(url_data)
     soup = bs(r.content, 'html.parser')
     div = soup.find(
-        "div", attrs={"ng-show": "active_match_type == 'international-tab'"})
+        "div", attrs={"ng-show": "active_match_type == 'domestic-tab'"})
 
     matches = div.find_all(class_="cb-mtch-lst cb-col cb-col-100 cb-tms-itm")
     for match in matches:
