@@ -1,9 +1,9 @@
 import time
+import importlib.util
+import sys
 import requests
 from bs4 import BeautifulSoup as bs
 from halo import Halo
-import importlib.util
-import sys
 
 spinner = Halo(text='World Cup Score...', color='green', spinner='dots')
 modeules = Halo(text='Loading...', spinner='dots', color='cyan')
