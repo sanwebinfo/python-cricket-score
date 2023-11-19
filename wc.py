@@ -99,7 +99,7 @@ except requests.Timeout as e:
 except requests.RequestException as e:
     spinner.stop()
     print("API Error")
-except ImportError:
+except (ImportError, ModuleNotFoundError):
     spinner.stop()
     print('Modules not Found - install request, beautifulsoup4, halo')
 except (KeyboardInterrupt, SystemExit):
