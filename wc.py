@@ -16,13 +16,13 @@ package_three = 'halo'
 try:
 
     if importlib.util.find_spec(package_one) is None:
-       print(package_two +" is not installed \n")
+       print("\n" + package_two + " is not installed \n")
        sys.exit()
     elif importlib.util.find_spec(package_two) is None:
-       print(package_two +" is not installed \n")
+       print("\n" + package_two + " is not installed \n")
        sys.exit()
     elif importlib.util.find_spec(package_three) is None:
-       print(package_three +" is not installed \n")
+       print("\n" + package_three + " is not installed \n")
        sys.exit()
     else:
        modeules.start()
@@ -101,7 +101,7 @@ except requests.RequestException as e:
     print("API Error")
 except (ImportError, ModuleNotFoundError):
     spinner.stop()
-    print('Modules not Found - install request, beautifulsoup4, halo')
+    print("Modules not Found - install request, beautifulsoup4, halo")
 except (KeyboardInterrupt, SystemExit):
     spinner.stop()
-    print("i am quitting")
+    print("Exit from the Fetching Score data \n")
