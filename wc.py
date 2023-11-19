@@ -13,23 +13,23 @@ package_one = 'requests'
 package_two = 'bs4'
 package_three = 'halo'
 
-if importlib.util.find_spec(package_one) is None:
-    print(package_two +" is not installed \n")
-    sys.exit()
-elif importlib.util.find_spec(package_two) is None:
-    print(package_two +" is not installed \n")
-    sys.exit()
-elif importlib.util.find_spec(package_three) is None:
-    print(package_three +" is not installed \n")
-    sys.exit()
-else:
-    modeules.start()
-    time.sleep(2)
-    modeules.stop()
-    print("> Verify Module and Getting Score Data...", end="\r")
-    time.sleep(2)
-
 try:
+
+    if importlib.util.find_spec(package_one) is None:
+       print(package_two +" is not installed \n")
+       sys.exit()
+    elif importlib.util.find_spec(package_two) is None:
+       print(package_two +" is not installed \n")
+       sys.exit()
+    elif importlib.util.find_spec(package_three) is None:
+       print(package_three +" is not installed \n")
+       sys.exit()
+    else:
+       modeules.start()
+       time.sleep(2)
+       modeules.stop()
+       print("> Verify Module and Getting Score Data...", end="\r")
+       time.sleep(2)
 
     spinner.start()
     time.sleep(1)
@@ -99,6 +99,9 @@ except requests.Timeout as e:
 except requests.RequestException as e:
     spinner.stop()
     print("API Error")
+except ImportError:
+    spinner.stop()
+    print('Modules not Found - install request, beautifulsoup4, halo')
 except (KeyboardInterrupt, SystemExit):
     spinner.stop()
     print("i am quitting")
