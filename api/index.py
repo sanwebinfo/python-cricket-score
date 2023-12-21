@@ -26,11 +26,9 @@ headers = {
     'User-Agent': get_random_agent
 }
 
-
 @app.route('/')
 def hello():
     return jsonify({'Code': 200, 'message': 'Python - Free Cricket Score API - JSON'})
-
 
 @app.route('/score', methods=['GET'])
 def score():
@@ -41,12 +39,10 @@ def score():
             'https://www.cricbuzz.com/live-cricket-scores/' + id, headers=headers)
         soup = bs(r.content, 'html.parser')
 
-        mobile_data = requests.get(
-            'https://m.cricbuzz.com/live-cricket-scores/' + id, headers=headers)
-        mobileview = bs(mobile_data.content, 'html.parser')
-        update = mobileview.find("div", attrs={"class": "cbz-ui-status"}).text.strip() if mobileview.find("div", attrs={
-            "class": "cbz-ui-status"}) else 'Live Score Data Updating Re-check After Few mins or Innings break'
-
+        update = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"}) else 'Data Not Found'
+        process = soup.find_all(
+            "div", attrs={"class": "cb-text-inprogress"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-inprogress"}) else 'Data Not Found'
         live_score = soup.find(
             "span", attrs={"class": "cb-font-20 text-bold"}).text.strip() if soup.find("span", attrs={"class": "cb-font-20 text-bold"}) else 'Data Not Found'
         title = soup.find(
@@ -89,9 +85,13 @@ def score():
             "div", attrs={"class": "cb-col cb-col-8 text-right"})[5].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-8 text-right"}) else 'Data Not Found'
         bowler_two_wicket = soup.find_all(
             "div", attrs={"class": "cb-col cb-col-8 text-right"})[7].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-8 text-right"}) else 'Data Not Found'
+        if (update == 'Data Not Found'):
+            status = process
+        else:
+            status = update
         return jsonify({
             'title': title,
-            'update': update,
+            'update': status,
             'livescore': live_score,
             'runrate': run_rate,
             'batterone': batter_one,
@@ -140,7 +140,6 @@ def score():
             "bowlertwoeconomy": 'Data not Found',
 
         })
-
 
 @app.errorhandler(404)
 def invalid_route(e):
