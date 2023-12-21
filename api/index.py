@@ -43,6 +43,8 @@ def score():
             "div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"}) else 'Match Stats will Update Soon'
         process = soup.find_all(
             "div", attrs={"class": "cb-text-inprogress"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-inprogress"}) else 'Match Stats will Update Soon'
+        noresult = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-100 cb-font-18 cb-toss-sts cb-text-abandon"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-100 cb-font-18 cb-toss-sts cb-text-abandon"}) else 'Match Stats will Update Soon'
         live_score = soup.find(
             "span", attrs={"class": "cb-font-20 text-bold"}).text.strip() if soup.find("span", attrs={"class": "cb-font-20 text-bold"}) else 'Data Not Found'
         title = soup.find(
@@ -85,10 +87,14 @@ def score():
             "div", attrs={"class": "cb-col cb-col-8 text-right"})[5].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-8 text-right"}) else 'Data Not Found'
         bowler_two_wicket = soup.find_all(
             "div", attrs={"class": "cb-col cb-col-8 text-right"})[7].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-8 text-right"}) else 'Data Not Found'
-        if (update == 'Match Stats will Update Soon'):
-            status = process
-        else:
+        if (update != 'Match Stats will Update Soon'):
             status = update
+        elif (process != 'Match Stats will Update Soon'):
+            status = process
+        elif (noresult != 'Match Stats will Update Soon'):
+            status = noresult
+        else:
+            status = 'Match Stats will Update Soon...'
         return jsonify({
             'title': title,
             'update': status,
@@ -96,11 +102,11 @@ def score():
             'runrate': run_rate,
             'batterone': batter_one,
             'batsmanonerun': batter_one_run,
-            'batsmanoneball': batter_one_ball,
+            'batsmanoneball': '('+ batter_one_ball +')',
             'batsmanonesr': batter_one_sr,
             'battertwo': batter_two,
             'batsmantworun': batter_two_run,
-            'batsmantwoball': batter_two_ball,
+            'batsmantwoball': '('+ batter_two_ball +')',
             'batsmantwosr': batter_two_sr,
             'bowlerone': bowler_one,
             "bowleroneover": bowler_one_over,
@@ -154,6 +160,8 @@ def live():
             "div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"}) else 'Match Stats will Update Soon'
         process = soup.find_all(
             "div", attrs={"class": "cb-text-inprogress"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-inprogress"}) else 'Match Stats will Update Soon'
+        noresult = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-100 cb-font-18 cb-toss-sts cb-text-abandon"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-100 cb-font-18 cb-toss-sts cb-text-abandon"}) else 'Match Stats will Update Soon'
         live_score = soup.find(
             "span", attrs={"class": "cb-font-20 text-bold"}).text.strip() if soup.find("span", attrs={"class": "cb-font-20 text-bold"}) else 'Data Not Found'
         title = soup.find(
@@ -196,10 +204,14 @@ def live():
             "div", attrs={"class": "cb-col cb-col-8 text-right"})[5].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-8 text-right"}) else 'Data Not Found'
         bowler_two_wicket = soup.find_all(
             "div", attrs={"class": "cb-col cb-col-8 text-right"})[7].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-8 text-right"}) else 'Data Not Found'
-        if (update == 'Match Stats will Update Soon'):
-            status = process
-        else:
+        if (update != 'Match Stats will Update Soon'):
             status = update
+        elif (process != 'Match Stats will Update Soon'):
+            status = process
+        elif (noresult != 'Match Stats will Update Soon'):
+            status = noresult
+        else:
+            status = 'Match Stats will Update Soon...'
         return jsonify({
             "success": 'true',
             "livescore": {
@@ -209,11 +221,11 @@ def live():
             'runrate': run_rate,
             'batsman': batter_one,
             'batsmanrun': batter_one_run,
-            'ballsfaced': batter_one_ball,
+            'ballsfaced': '('+ batter_one_ball +')',
             'sr': batter_one_sr,
             'batsmantwo': batter_two,
             'batsmantworun': batter_two_run,
-            'batsmantwoballfaced': batter_two_ball,
+            'batsmantwoballfaced':  '('+ batter_two_ball +')',
             'batsmantwosr': batter_two_sr,
             'bowler': bowler_one,
             "bowlerover": bowler_one_over,
