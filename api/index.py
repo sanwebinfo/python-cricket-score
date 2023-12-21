@@ -4,10 +4,11 @@ from bs4 import BeautifulSoup as bs
 from flask import Flask, escape, jsonify, request
 from flask_cors import CORS
 
+## Replace the CORS URL with your's
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 cors = CORS(app, resources={
-            r"/score/*": {"origins": [r'^https://.+sanweb.info$']}})
+            r"/score/*": {"origins": [r'^https://.+sanweb.info$', r'^https://.+mskian.com$']}})
 
 user_agent_list = [
     'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
