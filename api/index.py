@@ -40,9 +40,9 @@ def score():
         soup = bs(r.content, 'html.parser')
 
         update = soup.find_all(
-            "div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"}) else 'Data Not Found'
+            "div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"}) else 'Match Stats will Update Soon'
         process = soup.find_all(
-            "div", attrs={"class": "cb-text-inprogress"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-inprogress"}) else 'Data Not Found'
+            "div", attrs={"class": "cb-text-inprogress"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-inprogress"}) else 'Match Stats will Update Soon'
         live_score = soup.find(
             "span", attrs={"class": "cb-font-20 text-bold"}).text.strip() if soup.find("span", attrs={"class": "cb-font-20 text-bold"}) else 'Data Not Found'
         title = soup.find(
@@ -85,7 +85,7 @@ def score():
             "div", attrs={"class": "cb-col cb-col-8 text-right"})[5].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-8 text-right"}) else 'Data Not Found'
         bowler_two_wicket = soup.find_all(
             "div", attrs={"class": "cb-col cb-col-8 text-right"})[7].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-8 text-right"}) else 'Data Not Found'
-        if (update == 'Data Not Found'):
+        if (update == 'Match Stats will Update Soon'):
             status = process
         else:
             status = update
@@ -138,6 +138,123 @@ def score():
             "bowlertworun": 'Data not Found',
             "bowlertwowickers": 'Data not Found',
             "bowlertwoeconomy": 'Data not Found',
+
+        })
+    
+@app.route('/live', methods=['GET'])
+def live():
+    get_id = request.args.get('id')
+    id = escape(get_id)
+    if id:
+        r = requests.get(
+            'https://www.cricbuzz.com/live-cricket-scores/' + id, headers=headers)
+        soup = bs(r.content, 'html.parser')
+
+        update = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-100 cb-min-stts cb-text-complete"}) else 'Match Stats will Update Soon'
+        process = soup.find_all(
+            "div", attrs={"class": "cb-text-inprogress"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-inprogress"}) else 'Match Stats will Update Soon'
+        live_score = soup.find(
+            "span", attrs={"class": "cb-font-20 text-bold"}).text.strip() if soup.find("span", attrs={"class": "cb-font-20 text-bold"}) else 'Data Not Found'
+        title = soup.find(
+            "h1", attrs={"class": "cb-nav-hdr cb-font-18 line-ht24"}).text.strip().replace(", Commentary", "") if soup.find("h1", attrs={"class": "cb-nav-hdr cb-font-18 line-ht24"}) else 'Data Not Found'
+        run_rate = soup.find_all(
+            "span", attrs={"class": "cb-font-12 cb-text-gray"})[0].text.strip().replace("CRR:\u00a0", "") if soup.find_all("span", attrs={"class": "cb-font-12 cb-text-gray"}) else 'Data Not Found'
+        batter_one = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-50"})[1].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-50"}) else 'Data Not Found'
+        batter_two = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-50"})[2].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-50"}) else 'Data Not Found'
+        batter_one_run = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-10 ab text-right"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-10 ab text-right"}) else 'Data Not Found'
+        batter_two_run = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-10 ab text-right"})[2].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-10 ab text-right"}) else 'Data Not Found'
+        batter_one_ball = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-10 ab text-right"})[1].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-10 ab text-right"}) else 'Data Not Found'
+        batter_two_ball = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-10 ab text-right"})[3].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-10 ab text-right"}) else 'Data Not Found'
+        batter_one_sr = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-14 ab text-right"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-14 ab text-right"}) else 'Data Not Found'
+        batter_two_sr = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-14 ab text-right"})[1].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-14 ab text-right"}) else 'Data Not Found'
+        bowler_one = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-50"})[4].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-50"}) else 'Data Not Found'
+        bowler_two = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-50"})[5].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-50"}) else 'Data Not Found'
+        bowler_one_over = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-10 text-right"})[4].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-10 text-right"}) else 'Data Not Found'
+        bowler_two_over = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-10 text-right"})[6].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-10 text-right"}) else 'Data Not Found'
+        bowler_one_run = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-10 text-right"})[5].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-10 text-right"}) else 'Data Not Found'
+        bowler_two_run = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-10 text-right"})[7].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-10 text-right"}) else 'Data Not Found'
+        bowler_one_eco = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-14 text-right"})[2].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-10 ab text-right"}) else 'Data Not Found'
+        bowler_two_eco = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-14 text-right"})[3].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-10 ab text-right"}) else 'Data Not Found'
+        bowler_one_wicket = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-8 text-right"})[5].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-8 text-right"}) else 'Data Not Found'
+        bowler_two_wicket = soup.find_all(
+            "div", attrs={"class": "cb-col cb-col-8 text-right"})[7].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-8 text-right"}) else 'Data Not Found'
+        if (update == 'Match Stats will Update Soon'):
+            status = process
+        else:
+            status = update
+        return jsonify({
+            "success": 'true',
+            "livescore": {
+            'title': title,
+            'update': status,
+            'current': live_score,
+            'runrate': run_rate,
+            'batsman': batter_one,
+            'batsmanrun': batter_one_run,
+            'ballsfaced': batter_one_ball,
+            'sr': batter_one_sr,
+            'batsmantwo': batter_two,
+            'batsmantworun': batter_two_run,
+            'batsmantwoballfaced': batter_two_ball,
+            'batsmantwosr': batter_two_sr,
+            'bowler': bowler_one,
+            "bowlerover": bowler_one_over,
+            "bowlerruns": bowler_one_run,
+            "bowlerwickets": bowler_one_wicket,
+            "bowlereconomy": bowler_one_eco,
+            'bowlertwo': bowler_two,
+            "bowlertwoover": bowler_two_over,
+            "bowlertworuns": bowler_two_run,
+            "bowlertwowickets": bowler_two_wicket,
+            "bowlertwoeconomy": bowler_two_eco
+            }
+
+        })
+    else:
+        return jsonify({
+            "success": 'true',
+            "livescore": {
+            'title': 'Data not Found',
+            'update': 'Data not Found',
+            'current': 'Data not Found',
+            'runrate': 'Data not Found',
+            'batsman': 'Data not Found',
+            'batsmanrun': 'Data not Found',
+            'ballsfaced': 'Data not Found',
+            'sr': 'Data not Found',
+            'batsmantwo': 'Data not Found',
+            'batsmantworun': 'Data not Found',
+            'batsmantwoballfaced': 'Data not Found',
+            'batsmantwosr': 'Data not Found',
+            'bowler': 'Data not Found',
+            "bowlerover": 'Data not Found',
+            "bowlerruns": 'Data not Found',
+            "bowlerwickets": 'Data not Found',
+            "bowlereconomy": 'Data not Found',
+            'bowlertwo': 'Data not Found',
+            "bowlertwoover": 'Data not Found',
+            "bowlertworuns": 'Data not Found',
+            "bowlertwowickets": 'Data not Found',
+            "bowlertwoeconomy": 'Data not Found'
+            }
 
         })
 
