@@ -13,6 +13,7 @@ cors = CORS(app, resources={
 user_agent_list = [
     'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
     'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0',
+    'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0',
     # 'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36',
     # 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36',
     # 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
@@ -24,7 +25,8 @@ user_agent_list = [
 get_random_agent = random.choice(user_agent_list)
 
 headers = {
-    'User-Agent': get_random_agent
+    'User-Agent': get_random_agent,
+    'Cache-Control': 'no-cache'
 }
 
 @app.route('/')
@@ -46,6 +48,8 @@ def score():
             "div", attrs={"class": "cb-text-inprogress"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-inprogress"}) else 'Match Stats will Update Soon'
         noresult = soup.find_all(
             "div", attrs={"class": "cb-col cb-col-100 cb-font-18 cb-toss-sts cb-text-abandon"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-100 cb-font-18 cb-toss-sts cb-text-abandon"}) else 'Match Stats will Update Soon'
+        stumps = soup.find_all(
+            "div", attrs={"class": "cb-text-stumps"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-stumps"}) else 'Match Stats will Update Soon'
         live_score = soup.find(
             "span", attrs={"class": "cb-font-20 text-bold"}).text.strip() if soup.find("span", attrs={"class": "cb-font-20 text-bold"}) else 'Data Not Found'
         title = soup.find(
@@ -94,6 +98,8 @@ def score():
             status = process
         elif (noresult != 'Match Stats will Update Soon'):
             status = noresult
+        elif (stumps != 'Match Stats will Update Soon'):
+            status = stumps
         else:
             status = 'Match Stats will Update Soon...'
         return jsonify({
@@ -148,7 +154,7 @@ def score():
 
         })
     
-@app.route('/live', methods=['GET'])
+@app.route('/score/live', methods=['GET'])
 def live():
     get_id = request.args.get('id')
     id = escape(get_id)
@@ -163,6 +169,8 @@ def live():
             "div", attrs={"class": "cb-text-inprogress"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-inprogress"}) else 'Match Stats will Update Soon'
         noresult = soup.find_all(
             "div", attrs={"class": "cb-col cb-col-100 cb-font-18 cb-toss-sts cb-text-abandon"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-col cb-col-100 cb-font-18 cb-toss-sts cb-text-abandon"}) else 'Match Stats will Update Soon'
+        stumps = soup.find_all(
+            "div", attrs={"class": "cb-text-stumps"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-stumps"}) else 'Match Stats will Update Soon'
         live_score = soup.find(
             "span", attrs={"class": "cb-font-20 text-bold"}).text.strip() if soup.find("span", attrs={"class": "cb-font-20 text-bold"}) else 'Data Not Found'
         title = soup.find(
@@ -211,6 +219,8 @@ def live():
             status = process
         elif (noresult != 'Match Stats will Update Soon'):
             status = noresult
+        elif (stumps != 'Match Stats will Update Soon'):
+            status = stumps
         else:
             status = 'Match Stats will Update Soon...'
         return jsonify({
