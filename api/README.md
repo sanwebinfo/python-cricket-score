@@ -116,7 +116,48 @@ if __name__ == "__main__":
 ```
 
 - Run the API with gunicorn and systemd service
-- Use APache2 or Nginx for proxy server
+
+```sh
+pip install gunicorn
+ ```
+
+- Use Apache or Nginx for proxy server
+
+## Older version support
+
+- if you are using older version of python3.6.x try this below versions
+
+```txt
+
+## requirements.txt file
+
+beautifulsoup4==4.12.2
+cchardet==2.1.7
+certifi==2023.11.17
+charset-normalizer==2.0.12
+click==8.0.4
+dataclasses==0.8
+Flask==2.0.3
+Flask-Cors==4.0.0
+idna==3.6
+importlib-metadata==4.8.3
+itsdangerous==2.0.1
+Jinja2==3.0.3
+lxml==4.9.4
+MarkupSafe==2.0.1
+pkg-resources==0.0.0
+pur==7.3.1
+requests==2.27.1
+six==1.16.0
+soupsieve==2.3.2.post1
+typing-extensions==4.1.1
+urllib3==1.26.18
+Werkzeug==2.0.3
+zipp==3.6.0
+
+```
+
+- Replace `app.json.sort_keys = False` to `app.config['JSON_SORT_KEYS'] = False` in `index.py`
 
 ## Disclaimer 🗃
 
