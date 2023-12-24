@@ -58,6 +58,12 @@ def score():
                 "div", attrs={"class": "cb-text-lunch"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-lunch"}) else 'Match Stats will Update Soon'
             inningsbreak = soup.find_all(
                 "div", attrs={"class": "cb-text-inningsbreak"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-inningsbreak"}) else 'Match Stats will Update Soon'
+            tea = soup.find_all("div", attrs={"class": "cb-text-tea"})[0].text.strip() if soup.find(
+                "div", attrs={"class": "cb-text-tea"}) else 'Match Stats will Update Soon'
+            rain_break = soup.find_all("div", attrs={"class": "cb-text-rain"})[0].text.strip(
+            ) if soup.find("div", attrs={"class": "cb-text-rain"}) else 'Match Stats will Update Soon'
+            wet_outfield = soup.find_all("div", attrs={"class": "cb-text-wetoutfield"})[0].text.strip(
+            ) if soup.find("div", attrs={"class": "cb-text-wetoutfield"}) else 'Match Stats will Update Soon'
             live_score = soup.find(
                 "span", attrs={"class": "cb-font-20 text-bold"}).text.strip() if soup.find("span", attrs={"class": "cb-font-20 text-bold"}) else 'Data Not Found'
             title = soup.find(
@@ -146,6 +152,12 @@ def score():
             status = lunch
         elif (inningsbreak != 'Match Stats will Update Soon'):
             status = inningsbreak
+        elif (tea != 'Match Stats will Update Soon'):
+            status = tea
+        elif (rain_break != 'Match Stats will Update Soon'):
+            status = rain_break
+        elif (wet_outfield != 'Match Stats will Update Soon'):
+            status = wet_outfield
         else:
             status = 'Match Stats will Update Soon...'
         return jsonify({
@@ -223,6 +235,12 @@ def live():
                 "div", attrs={"class": "cb-text-lunch"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-lunch"}) else 'Match Stats will Update Soon'
             inningsbreak = soup.find_all(
                 "div", attrs={"class": "cb-text-inningsbreak"})[0].text.strip() if soup.find_all("div", attrs={"class": "cb-text-inningsbreak"}) else 'Match Stats will Update Soon'
+            tea = soup.find_all("div", attrs={"class": "cb-text-tea"})[0].text.strip() if soup.find(
+                "div", attrs={"class": "cb-text-tea"}) else 'Match Stats will Update Soon'
+            rain_break = soup.find_all("div", attrs={"class": "cb-text-rain"})[0].text.strip(
+            ) if soup.find("div", attrs={"class": "cb-text-rain"}) else 'Match Stats will Update Soon'
+            wet_outfield = soup.find_all("div", attrs={"class": "cb-text-wetoutfield"})[0].text.strip(
+            ) if soup.find("div", attrs={"class": "cb-text-wetoutfield"}) else 'Match Stats will Update Soon'
             live_score = soup.find(
                 "span", attrs={"class": "cb-font-20 text-bold"}).text.strip() if soup.find("span", attrs={"class": "cb-font-20 text-bold"}) else 'Data Not Found'
             title = soup.find(
@@ -311,6 +329,12 @@ def live():
             status = lunch
         elif (inningsbreak != 'Match Stats will Update Soon'):
             status = inningsbreak
+        elif (tea != 'Match Stats will Update Soon'):
+            status = tea
+        elif (rain_break != 'Match Stats will Update Soon'):
+            status = rain_break
+        elif (wet_outfield != 'Match Stats will Update Soon'):
+            status = wet_outfield
         else:
             status = 'Match Stats will Update Soon...'
         return jsonify({
