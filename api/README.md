@@ -1,6 +1,6 @@
 # Python Cricket API
 
-Free Cricket API - Scrape the data using `BeautifulSoup` and export a output via JSON using Flask micro web framework  
+Free Cricket API - Scrape the data using `BeautifulSoup` and export a output via JSON using Flask micro web framework.  
 
 You can Free Deploy it on `Vercel`
 
@@ -12,6 +12,7 @@ You can Free Deploy it on `Vercel`
 - Required Modules
 - Virtual Environment for Running Flask server
 - CORS Header
+- Multiple timezone Support for get the Match Starting time
 - Self-hosting support with gunicorn
 
 ## Setup and Development
@@ -32,10 +33,10 @@ python3 -m venv venv
 source venv/bin/activate
 
 ## install Modules
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 
 ## verify
-python -m flask --version
+python3 -m flask --version
 
 ## start the dev server 
 flask --app index.py --debug run --host=0.0.0.0 --port=5000
@@ -139,14 +140,18 @@ click==8.0.4
 dataclasses==0.8
 Flask==2.0.3
 Flask-Cors==4.0.0
+gunicorn==21.2.0
 idna==3.6
 importlib-metadata==4.8.3
 itsdangerous==2.0.1
 Jinja2==3.0.3
 lxml==4.9.4
 MarkupSafe==2.0.1
+packaging==21.3
 pkg-resources==0.0.0
 pur==7.3.1
+pyparsing==3.1.1
+pytz==2023.3.post1
 requests==2.27.1
 six==1.16.0
 soupsieve==2.3.2.post1
